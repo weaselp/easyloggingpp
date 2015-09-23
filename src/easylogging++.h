@@ -36,6 +36,9 @@
 #   elif(_MSC_VER >= 1700)
 #      define ELPP_CXX11 1
 #   endif  // (_MSC_VER == 1600)
+#else
+#   define ELPP_COMPILER_MSVC 0
+#   define ELPP_CRT_DBG_WARNINGS 0
 #endif  // defined(_MSC_VER)
 // Clang++
 #if defined(__clang__) && (__clang__ == 1)
@@ -50,43 +53,63 @@
 // MinGW
 #if defined(__MINGW32__) || defined(__MINGW64__)
 #   define ELPP_MINGW 1
+#else
+#   define ELPP_MINGW 0
 #endif  // defined(__MINGW32__) || defined(__MINGW64__)
 // Cygwin
 #if defined(__CYGWIN__) && (__CYGWIN__ == 1)
 #   define ELPP_CYGWIN 1
+#else
+#   define ELPP_CYGWIN 0
 #endif  // defined(__CYGWIN__) && (__CYGWIN__ == 1)
 // Intel C++
 #if defined(__INTEL_COMPILER)
 #   define ELPP_COMPILER_INTEL 1
+#else
+#   define ELPP_COMPILER_INTEL 0
 #endif
 // Operating System Evaluation
 // Windows
 #if defined(_WIN32) || defined(_WIN64)
 #   define ELPP_OS_WINDOWS 1
+#else
+#   define ELPP_OS_WINDOWS 0
 #endif  // defined(_WIN32) || defined(_WIN64)
 // Linux
 #if (defined(__linux) || defined(__linux__))
 #   define ELPP_OS_LINUX 1
+#else
+#   define ELPP_OS_LINUX 0
 #endif  // (defined(__linux) || defined(__linux__))
 // Mac
 #if defined(__APPLE__)
 #   define ELPP_OS_MAC 1
+#else
+#   define ELPP_OS_MAC 0
 #endif  // defined(__APPLE__)
 // FreeBSD
 #if defined(__FreeBSD__)
 #   define ELPP_OS_FREEBSD 1
+#else
+#   define ELPP_OS_FREEBSD 0
 #endif
 // Solaris
 #if defined(__sun)
 #   define ELPP_OS_SOLARIS 1
+#else
+#   define ELPP_OS_SOLARIS 0
 #endif
 // Unix
 #if ((ELPP_OS_LINUX || ELPP_OS_MAC || ELPP_OS_FREEBSD || ELPP_OS_SOLARIS) && (!ELPP_OS_WINDOWS))
 #   define ELPP_OS_UNIX 1
+#else
+#   define ELPP_OS_UNIX 0
 #endif  // ((ELPP_OS_LINUX || ELPP_OS_MAC || ELPP_OS_FREEBSD || ELPP_OS_SOLARIS) && (!ELPP_OS_WINDOWS))
 // Android
 #if defined(__ANDROID__)
 #   define ELPP_OS_ANDROID 1
+#else
+#   define ELPP_OS_ANDROID 0
 #endif  // defined(__ANDROID__)
 // Evaluating Cygwin as *nix OS
 #if !ELPP_OS_UNIX && !ELPP_OS_WINDOWS && ELPP_CYGWIN
@@ -166,12 +189,15 @@
 #   if (ELPP_COMPILER_GCC && !ELPP_MINGW)
 #      define ELPP_STACKTRACE 1
 #   else
+#      define ELPP_STACKTRACE 0
 #      if ELPP_COMPILER_MSVC
 #         pragma message("Stack trace not available for this compiler")
 #      else
 #         warning "Stack trace not available for this compiler";
 #      endif  // ELPP_COMPILER_MSVC
 #   endif  // ELPP_COMPILER_GCC
+#else
+#   define ELPP_STACKTRACE 0
 #endif  // (defined(ELPP_STACKTRACE_ON_CRASH))
 // Miscellaneous macros
 #define ELPP_UNUSED(x) (void)x
@@ -221,6 +247,8 @@
 #endif  // defined(ELPP_EXPERIMENTAL_ASYNC)
 #if defined(ELPP_THREAD_SAFE) || ELPP_ASYNC_LOGGING
 #   define ELPP_THREADING_ENABLED 1
+#else
+#   define ELPP_THREADING_ENABLED 0
 #endif  // defined(ELPP_THREAD_SAFE) || ELPP_ASYNC_LOGGING
 // Function macro ELPP_FUNC
 #undef ELPP_FUNC
