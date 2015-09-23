@@ -923,7 +923,7 @@ static inline const char* charPtrVal(const char* pointer) {
     return pointer == nullptr ? base::consts::kNullPointer : pointer;
 }
 /// @brief Aborts application due with user-defined status
-static inline void abort(int status, const std::string& reason = std::string()) {
+static inline void __attribute__ ((noreturn)) abort(int status, const std::string& reason = std::string()) {
     // Both status and reason params are there for debugging with tools like gdb etc
     ELPP_UNUSED(status);
     ELPP_UNUSED(reason);
@@ -5610,13 +5610,13 @@ static void logCrashReason(int sig, bool stackTraceIfAvailable, Level level, con
 #endif  // ELPP_STACKTRACE
     ELPP_WRITE_LOG(el::base::Writer, level, base::DispatchAction::NormalLog, logger) << ss.str();
 }
-static inline void crashAbort(int sig) {
+static inline void __attribute__ ((noreturn)) crashAbort(int sig) {
     base::utils::abort(sig);
 }
 /// @brief Default application crash handler
 ///
 /// @detail This function writes log using 'default' logger, prints stack trace for GCC based compilers and aborts program.
-static inline void defaultCrashHandler(int sig) {
+static inline void __attribute__ ((noreturn)) defaultCrashHandler(int sig) {
     base::debug::logCrashReason(sig, true, Level::Fatal, base::consts::kDefaultLoggerId);
     base::debug::crashAbort(sig);
 }
@@ -5699,7 +5699,7 @@ public:
     }
     /// @brief Abort due to crash with signal in parameter
     /// @param sig Crash signal
-    static inline void crashAbort(int sig, const char* sourceFile = "", unsigned int long line = 0) {
+    static inline void __attribute__ ((noreturn))  crashAbort(int sig, const char* sourceFile = "", unsigned int long line = 0) {
         std::stringstream ss;
         ss << base::debug::crashReason(sig).c_str();
         ss << " - [Called el::Helpers::crashAbort(" << sig << ")]";
