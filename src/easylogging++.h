@@ -49,6 +49,8 @@
 #   if (ELPP_CLANG_VERSION >= 30300)
 #      define ELPP_CXX11 1
 #   endif  // (ELPP_CLANG_VERSION >= 30300)
+#else
+#   define ELPP_COMPILER_CLANG 0
 #endif  // defined(__clang__) && (__clang__ == 1)
 // MinGW
 #if defined(__MINGW32__) || defined(__MINGW64__)
