@@ -17,7 +17,11 @@
 
 #include "easylogging++.h"
 
+#if (defined(__clang__) && (__clang__ == 1))
 #pragma clang diagnostic ignored "-Wshadow"
+#elif defined(__GNUC__)
+#pragma GCC diagnostic ignored "-Wshadow"
+#endif
 
 #if defined(AUTO_INITIALIZE_EASYLOGGINGPP)
 INITIALIZE_EASYLOGGINGPP
